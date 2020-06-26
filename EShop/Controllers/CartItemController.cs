@@ -47,7 +47,47 @@ namespace EShop.Controllers
             return View(cartItem);
         }
 
-        
+        public ActionResult AjaxClearCart()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return JavaScript("window.location = '/Account/Login'");
+            }
+            var userId = User.Identity.GetUserId();
+            var cart = db.Carts.FirstOrDefault(x => x.UserId == userId);
+
+            if (cart != null)//有返回值
+            {
+                try
+                {
+                    db.Carts.Remove(cart);
+                    db.SaveChanges();
+                }
+                catch { }
+            }
+            
+            return View(ProductCount());
+        }
+
+        public int ProductCount()   //购物车中的产品数量 
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return 0;
+            }
+
+            var userId = User.Identity.GetUserId();
+            var cart = db.Carts.FirstOrDefault(x => x.UserId == userId);
+            if (cart == null)
+            {
+                return 0;
+            }
+            var cartItems = db.CartItems.ToList();
+            var userCartItems = cartItems.Where(x => x.CartId == cart.Id).ToList();
+            return userCartItems.Sum(x => x.ProductCount);
+
+
+        }
 
         protected override void Dispose(bool disposing)
         {
