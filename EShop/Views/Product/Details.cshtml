@@ -1,0 +1,50 @@
+﻿@model EShop.Models.Product
+
+@{
+    ViewBag.Title = "商品详细信息";
+}
+
+<h2>商品详细信息</h2>
+
+<div>
+    <h4>商品</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            <img src="/images/@Html.DisplayFor(model => model.ImageUrl)"
+                 width="250 " height="250"> 
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("返回商品列表", "Index")
+</p>
