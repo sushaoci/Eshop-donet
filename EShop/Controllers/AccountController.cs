@@ -9,6 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EShop.Models;
+using System.Text;
+using System.Runtime.InteropServices;
+
+using DLL.Verify;
+using MSGBUSLib;
+//using CLRDLL;
+
 
 namespace EShop.Controllers
 {
@@ -151,6 +158,47 @@ namespace EShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                MSGBUS msgBus = new MSGBUS();
+
+                ////===win32dll===
+                //[DllImport("CppDLL.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl)]
+                //[return: MarshalAs(UnmanagedType.I1)]
+                //static extern bool IsEmail(byte[] email);
+
+                //byte[] bb = Encoding.Default.GetBytes(model.Email);
+
+                //if (!IsEmail(bb))
+                //{
+                //    ModelState.AddModelError("", msgBus.getMsg(10001));
+                //    return View(model);
+                //}
+
+                ////===clrdll===
+                //Verify verify = new Verify();
+                //unsafe
+                //{
+                //    byte[] bb = Encoding.Default.GetBytes(model.Email);
+                //    sbyte[] sbb = new sbyte[bb.Length];
+                //    Buffer.BlockCopy(bb, 0, sbb, 0, bb.Length);
+                //    fixed (sbyte* sb = sbb)
+                //    {
+                //        if (!verify.IsEmail(sb))
+                //        {
+                //            ModelState.AddModelError("", msgBus.getMsg(10001));
+                //            return View(model);
+                //        }
+                //    }
+                //}
+
+
+                //===verify===
+                Verify verify = new Verify();
+                if (!verify.IsEmail(model.Email))
+                {
+                    ModelState.AddModelError("", msgBus.getMsg(10001));
+                    return View(model);
+                }
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
