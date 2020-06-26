@@ -53,7 +53,7 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="CLRDLL">
-      <HintPath>..\..\lib\CLRDLL.dll</HintPath>
+      <HintPath>..\lib\CLRDLL.dll</HintPath>
     </Reference>
     <Reference Include="EncryptAndDecrypt">
       <HintPath>..\..\lib\EncryptAndDecrypt.dll</HintPath>
@@ -107,17 +107,23 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RandomCode">
-      <HintPath>..\..\lib\RandomCode.dll</HintPath>
+    <Reference Include="RandomCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dab2976d5b1830dc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Users\sekhuinaam\Documents\Tencent Files\769374177\FileRecv\TongJi_book-trading-platform_donet-master\TongJi_book-trading-platform_donet-master\项目源代码\lib\RandomCode.dll</HintPath>
     </Reference>
     <Reference Include="SendEmails">
       <HintPath>..\..\lib\SendEmails.dll</HintPath>
+    </Reference>
+    <Reference Include="SHARE_DLL_RANDOMCODE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c4a747c52629b2bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Users\sekhuinaam\source\repos\SHARE_DLL_RANDOMCODE\SHARE_DLL_RANDOMCODE\bin\Debug\SHARE_DLL_RANDOMCODE.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -163,7 +169,7 @@
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="Verify">
-      <HintPath>..\..\lib\Verify.dll</HintPath>
+      <HintPath>..\..\..\Users\sekhuinaam\Desktop\Eshop\lib\Verify.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -267,7 +273,12 @@
     <Content Include="Views\CartItem\Index.cshtml" />
     <Content Include="Views\Product\AjaxAddToCart.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+<<<<<<< HEAD
     <Content Include="Views\CartItem\AjaxClearCart.cshtml" />
+=======
+    <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\CartItem\AjaxDeleteFromCart.cshtml" />
+>>>>>>> 4b39164a6129989d5fd34330b47cb0c51245c842
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

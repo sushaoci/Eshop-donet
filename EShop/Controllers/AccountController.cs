@@ -14,6 +14,10 @@ using System.Runtime.InteropServices;
 
 using DLL.Verify;
 using MSGBUSLib;
+using static SendEmails.sendVerify;
+using DLL.EncryptAndDecrypt;
+using DLL.RandomCode;
+using System.Threading;
 //using CLRDLL;
 
 
@@ -141,6 +145,50 @@ namespace EShop.Controllers
             }
         }
 
+        private static void sendEmail(Object state)
+        {
+            //SendMail("快乐购物用户验证", email, "用户" + username_init + "确认您的账户，请点击这里：" + callbackurl);
+        }
+
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="title">邮件主题</param>
+        /// <param name="email">要发送对象的邮箱</param>
+        /// <param name="content">邮件内容</param>
+        /// <returns></returns>
+        public ActionResult sendEmail(string title, string email, string content)
+        {
+            string senderServerIp = "smtp.163.com";   //使用163代理邮箱服务器（也可是使用qq的代理邮箱服务器，但需要与具体邮箱对相应）
+            string toMailAddress = email;              //要发送对象的邮箱
+            string fromMailAddress = "sekhn99@163.com";//你的邮箱
+            string subjectInfo = title;                  //主题
+            string bodyInfo = "<p>" + content + "</p>";//以Html格式发送的邮件
+            string mailUsername = "sekhn99@163.com";              //登录邮箱的用户名
+            string mailPassword = "TVOUZMGUMNDTVYAF"; //对应的登录邮箱的第三方密码（你的邮箱不论是163还是qq邮箱，都需要自行开通stmp服务）TVOUZMGUMNDTVYAF
+            string mailPort = "25";                      //发送邮箱的端口号
+                                                         //string attachPath = "E:\\123123.txt; E:\\haha.pdf";
+
+            //创建发送邮箱的对象
+            Email myEmail = new Email(senderServerIp, toMailAddress, fromMailAddress, subjectInfo, bodyInfo, mailUsername, mailPassword, mailPort, false, false);
+
+            //添加附件
+            //email.AddAttachments(attachPath);
+
+            if (myEmail.Send())
+            {
+                //return RedirectToAction("Index", "Product");
+                return Content("'邮件已成功发送");
+            }
+            else
+            {
+                return Content("'邮件发送失败");
+            }
+
+        }
+
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -199,19 +247,34 @@ namespace EShop.Controllers
                     return View(model);
                 }
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                EncryptAndDecrypt crypt = new EncryptAndDecrypt();//密码加密
+
+                string username_init = "";
+                Random random = new Random();
+                RandomCode rand = new RandomCode();
+                username_init = rand.getCharNumber(6);
+
+                var user = new ApplicationUser { UserName = username_init, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackurl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    sendEmail("快乐购物用户验证", "769374177@qq.com", "用户" + username_init + "确认您的账户，请点击这里：" + callbackurl);
+                    ThreadPool.QueueUserWorkItem(sendEmail, "");
+
+                    //发送邮箱激
+                    //return View("VerifyEmail");
                     // 有关如何启用帐户确认和密码重置的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=320771
                     // 发送包含此链接的电子邮件
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
+                    //await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackurl + "\">這裏</a>来确认你的帐户");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return View("DisplayEmail");
 
-                    return RedirectToAction("Index", "Product");
                 }
                 AddErrors(result);
             }
