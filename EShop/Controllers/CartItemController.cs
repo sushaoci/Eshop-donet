@@ -49,12 +49,26 @@ namespace EShop.Controllers
 
         public ActionResult AjaxClearCart()
         {
+
             if (!User.Identity.IsAuthenticated)
             {
                 return JavaScript("window.location = '/Account/Login'");
             }
             var userId = User.Identity.GetUserId();
             var cart = db.Carts.FirstOrDefault(x => x.UserId == userId);
+
+            var cartItems = new List<CartItem>();
+            if (cart != null)
+            {
+                var cartItems0 = db.CartItems.Include(c => c.Cart).Include(c => c.Product).ToList();
+                cartItems = cartItems0.Where(x => x.CartId == cart.Id).ToList();
+            }
+            decimal money = 0;
+            foreach(CartItem c in cartItems)
+            {
+                money += c.ProductCount * c.Product.Price;
+            }
+            ViewData["money"] = money;
 
             if (cart != null)//有返回值
             {
@@ -66,6 +80,32 @@ namespace EShop.Controllers
                 catch { }
             }
             
+            return View(ProductCount());
+        }
+
+        public ActionResult AjaxDeleteFromCart(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return JavaScript("window.location = '/Account/Login'");
+            }
+            var userId = User.Identity.GetUserId();
+            var cartitem0 = db.CartItems.Single(s => s.Id == id);
+            if(id == null)
+            {
+                return JavaScript("window.location = '/Account/Login'");
+            }
+
+            if (cartitem0 != null)//有返回值
+            {
+                try
+                {
+                    db.CartItems.Remove(cartitem0);
+                    db.SaveChanges();
+                }
+                catch { }
+            }
+
             return View(ProductCount());
         }
 

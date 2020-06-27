@@ -56,7 +56,7 @@
       <HintPath>..\lib\CLRDLL.dll</HintPath>
     </Reference>
     <Reference Include="EncryptAndDecrypt">
-      <HintPath>..\..\lib\EncryptAndDecrypt.dll</HintPath>
+      <HintPath>..\lib\EncryptAndDecrypt.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -119,7 +119,7 @@
       <HintPath>..\..\..\Users\sekhuinaam\Documents\Tencent Files\769374177\FileRecv\TongJi_book-trading-platform_donet-master\TongJi_book-trading-platform_donet-master\项目源代码\lib\RandomCode.dll</HintPath>
     </Reference>
     <Reference Include="SendEmails">
-      <HintPath>..\..\lib\SendEmails.dll</HintPath>
+      <HintPath>..\..\..\Users\sekhuinaam\Desktop\Eshop\lib\SendEmails.dll</HintPath>
     </Reference>
     <Reference Include="SHARE_DLL_RANDOMCODE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c4a747c52629b2bd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -128,6 +128,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -199,6 +201,7 @@
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -276,6 +279,7 @@
     <Content Include="Views\CartItem\AjaxClearCart.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
     <Content Include="Views\CartItem\AjaxDeleteFromCart.cshtml" />
+    <Content Include="Views\Manage\ChangeUsername.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

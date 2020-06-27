@@ -58,6 +58,19 @@ namespace EShop.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeUsernameViewModel
+    {
+        [Required]
+        [Display(Name = "用户名")]
+        public string OldUsername { get; set; }
+
+        [Required]
+        [Display(Name = "新用户名")]
+        public string NewUsername { get; set; }
+
+
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]
