@@ -24,6 +24,7 @@ namespace EShop.Controllers
                 if (cart != null)
                 {
                     var cartItems0 = db.CartItems.Include(c => c.Cart).Include(c => c.Product).ToList();
+
                     cartItems = cartItems0.Where(x => x.CartId == cart.Id).ToList();
                 }
             }
@@ -53,6 +54,7 @@ namespace EShop.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 return JavaScript("window.location = '/Account/Login'");
+
             }
             var userId = User.Identity.GetUserId();
             var cart = db.Carts.FirstOrDefault(x => x.UserId == userId);
@@ -88,6 +90,7 @@ namespace EShop.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 return JavaScript("window.location = '/Account/Login'");
+                
             }
             var userId = User.Identity.GetUserId();
             var cartitem0 = db.CartItems.Single(s => s.Id == id);
